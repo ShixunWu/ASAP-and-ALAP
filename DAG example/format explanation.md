@@ -5,7 +5,7 @@
 - ’T’ row consists of the following columns:
     1) ’T’
     2) a unique numeric ID
-    3) the period (in milliseconds, fractional is ok)
+    3) the period (in milliseconds)
     4) the relative deadline
 
 - ‘V’ row consists for the following columns (unbounded number):
