@@ -1,6 +1,5 @@
 import argparse
 import networkx as nx
-import numpy as np
 import csv
 
 from math import ceil
