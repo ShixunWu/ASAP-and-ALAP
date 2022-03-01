@@ -1,2 +1,2 @@
 # ASAP-and-ALAP
-ASAP and ALAP scheduling algorithm implementation 
+Compute the priority for one directed acyclic graphs(DAG) by using ASAP or ALAP Scheduling Algorithm.
