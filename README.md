@@ -1,5 +1,5 @@
 <h1 align="center">
-  ASAP-and-ALAP Scheduler for DAG
+  ASAP-and-ALAP for DAG
 </h1>
 <h4 align="center">Get priority for one directed acyclic graphs(DAG) by appling ASAP or ALAP Scheduling Algorithm.</h4>
 <p align="center">
@@ -26,7 +26,7 @@ pip install networkx
 
 #### Task generator:
 
-The options of the ASAP-and-ALAP Schedulertaskset are as follows (`python3 asap_alap.py -h`):
+The options of the ASAP-and-ALAP are as follows (`python3 asap_alap.py -h`):
 
 ```
 usage: asap_alap.py [-h] [-s | -l] DAGfile
