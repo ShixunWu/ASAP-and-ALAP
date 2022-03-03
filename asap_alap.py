@@ -99,6 +99,7 @@ def parse_nodes_nxGraph_asap(file_name):
     periods, deadlines, nodes = parse_dag_task_file(file_name)
     G = nx.DiGraph()
     nodes = nodes.get(1)
+    print(nodes)
     for node in nodes:
         index = node[0]
         WCET_temp = node[4]
