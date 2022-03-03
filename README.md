@@ -26,7 +26,7 @@ pip install networkx
 
 #### Task generator:
 
-The options of the taskset generator are as follows (`python3 asap_alap.py -h`):
+The options of the ASAP-and-ALAP Schedulertaskset are as follows (`python3 asap_alap.py -h`):
 
 ```
 usage: asap_alap.py [-h] [-s | -l] DAGfile
@@ -43,11 +43,15 @@ optional arguments:
   -l, --ALAP  Run ALAP scheduling algorithm
 ```
 
-To test the tool and run the taskset generator with the default options:
+To test the tool and run the asap with:
 
 ```
 $ python3 asap_alap.py -s ./DAG\ example/Tasks_1_Run_0.csv'
 ```
+
+#### DAG file format
+
+The format infromation is in DAG example file. It helps you construct your DAG file.
 
 ## 🚧 Limitations
 
