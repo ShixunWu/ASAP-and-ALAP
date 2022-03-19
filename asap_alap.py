@@ -5,7 +5,8 @@ import csv
 from math import ceil
 from collections import defaultdict
 
-parser = argparse.ArgumentParser(description="Compute the priority for one directed acyclic graphs(DAG) by using ASAP or ALAP Scheduling Algorithm. (To test the program you can run the demo DAG file by 'python3 asap_alap.py -s ./DAG\ example/Tasks_1_Run_0.csv') ")
+parser = argparse.ArgumentParser(
+    description="Compute the priority for one directed acyclic graphs(DAG) by using ASAP or ALAP Scheduling Algorithm. (To test the program you can run the demo DAG file by 'python3 asap_alap.py -s ./DAG_example/Tasks_1_Run_0.csv') ")
 group = parser.add_mutually_exclusive_group()
 group.add_argument(
     "-s", "--ASAP", help="Run ASAP scheduling algorithm", action="store_true")
@@ -95,6 +96,7 @@ def parse_dag_task_file(fname, scale=keepms):
 
     return (periods, deadlines, nodes)
 
+
 def parse_nodes_nxGraph_asap(file_name):
     periods, deadlines, nodes = parse_dag_task_file(file_name)
     G = nx.DiGraph()
@@ -104,14 +106,16 @@ def parse_nodes_nxGraph_asap(file_name):
         index = node[0]
         WCET_temp = node[4]
         if(index == 1):
-            G.add_node(index, t_level = 0, priority = 0, WCET=WCET_temp)
+            G.add_node(index, t_level=0, priority=0, WCET=WCET_temp)
         else:
-            G.add_node(index, t_level = 0, priority = 0)
+            G.add_node(index, t_level=0, priority=0)
         print("Add node {} to Graph".format(index))
         for pred in node[5]:
             G.add_edge(pred, index, cost=nodes[pred-1][4])
-            print("Add edge from node {} to {} with cost:{}".format(pred, index, nodes[pred-1][4]))
+            print("Add edge from node {} to {} with cost:{}".format(
+                pred, index, nodes[pred-1][4]))
     return G
+
 
 def parse_nodes_nxGraph_alap(file_name):
     periods, deadlines, nodes = parse_dag_task_file(file_name)
@@ -121,18 +125,21 @@ def parse_nodes_nxGraph_alap(file_name):
         index = node[0]
         WCET_temp = node[4]
         if(index == 1):
-            G.add_node(index, b_level = 0, priority = 0, WCET=WCET_temp)
+            G.add_node(index, b_level=0, priority=0, WCET=WCET_temp)
         else:
-            G.add_node(index, b_level = 0, priority = 0)
+            G.add_node(index, b_level=0, priority=0)
         print("Add node {} to Graph".format(index))
         for pred in node[5]:
             G.add_edge(pred, index, cost=nodes[pred-1][4])
-            print("Add edge from node {} to {} with cost:{}".format(pred, index, nodes[pred-1][4]))
+            print("Add edge from node {} to {} with cost:{}".format(
+                pred, index, nodes[pred-1][4]))
     return G
+
 
 def ASAP(file_name):
     # build the DAG
     G = parse_nodes_nxGraph_asap(file_name)
+    nx.draw(G)
     # find the t_level of nodes
     print("-----t_level of nodes:-----")
     for node in G.nodes:
@@ -165,7 +172,36 @@ def ASAP(file_name):
         print('Node', node, ': priority = ', G.nodes[node]['priority'])
 
 
-def single_source_longest_dag_path_length(graph, s):
+def longest_dag_path_length_one_to_others(graph, s):
+    """_summary_
+    The longest path length that from the node s to all other node
+    Args:
+        graph (_type_): _description_
+        s (_type_): _description_
+
+    Returns:
+        dic: element pair is <node, length>
+    """
+    dic = dict.fromkeys(graph.nodes, -float('inf'))
+    dic[s] = 0
+    topo_order = nx.topological_sort(graph)
+    for n in topo_order:
+        for s in graph.successors(n):
+            dic[s] = max(dic[s], dic[n] + graph.edges[n, s]['cost'])
+        dic[n] += graph.nodes[1]['WCET']
+    return dic
+
+
+def longest_dag_path_length_src_to_others(graph):
+    """_summary_
+    The longest path length that from the node s to all other node
+    Args:
+        graph (_type_): _description_
+
+    Returns:
+        dic: element pair is <node, length>
+    """
+    s = graph.nodes[1]
     dic = dict.fromkeys(graph.nodes, -float('inf'))
     dic[s] = 0
     topo_order = nx.topological_sort(graph)
@@ -183,7 +219,7 @@ def ALAP(file_name):
     # find the b_level of nodes
     print("-----b_level of nodes:-----")
     for node in G.nodes:
-        node_longest_path_dict = single_source_longest_dag_path_length(G, node)
+        node_longest_path_dict = longest_dag_path_length_one_to_others(G, node)
         node_longest_path = max(node_longest_path_dict.values())
         G.nodes[node]['b_level'] = node_longest_path
         print('Node', node, ': b_level = ', G.nodes[node]['b_level'])
@@ -220,4 +256,3 @@ elif args.ALAP:
     ALAP(args.DAGfile)
 else:
     print("Please choose the scheduling algorithm.")
-
