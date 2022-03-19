@@ -31,8 +31,7 @@ The options of the ASAP-and-ALAP are as follows (`python3 asap_alap.py -h`):
 ```
 usage: asap_alap.py [-h] [-s | -l] DAGfile
 
-Compute the priority for one directed acyclic graphs(DAG) by using ASAP or ALAP Scheduling Algorithm. (To test the program you can run the demo DAG file by 'python3 asap_alap.py -s ./DAG\
-example/Tasks_1_Run_0.csv')
+Compute the priority for one directed acyclic graphs(DAG) by using ASAP or ALAP Scheduling Algorithm. (To test the program you can run the demo DAG file by 'python3 asap_alap.py -s ./DAG_example/Tasks_1_Run_0.csv')
 
 positional arguments:
   DAGfile     The DAG file path
